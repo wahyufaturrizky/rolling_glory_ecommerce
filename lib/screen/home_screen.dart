@@ -7,6 +7,8 @@
  * See LICENSE for distribution and usage details.
  */
 
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -184,9 +186,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                   mainContext,
                                   MaterialPageRoute(
                                       builder: (context) => MyDetailPageApp(
-                                            detailData: resGifts?["data"]
-                                                ?[index],
-                                          )));
+                                          detailData: resGifts?["data"]
+                                              ?[index])));
                             },
                             onTapWhisList: () {
                               if (!isLoadingWhistList) {
@@ -208,4 +209,41 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             )));
   }
+}
+
+class Gift {
+  final String id;
+  final String type;
+  final Attributes attributes;
+
+  const Gift(this.id, this.type, this.attributes);
+}
+
+class Attributes {
+  final int id;
+  final String name;
+  final String info;
+  final String description;
+  final int points;
+  final String slug;
+  final int stock;
+  final List<String> images;
+  final int isNew;
+  final double rating;
+  final int numOfReviews;
+  final int isWishlist;
+
+  const Attributes(
+      this.id,
+      this.name,
+      this.info,
+      this.description,
+      this.points,
+      this.slug,
+      this.stock,
+      this.images,
+      this.isNew,
+      this.rating,
+      this.numOfReviews,
+      this.isWishlist);
 }
