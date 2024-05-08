@@ -8,9 +8,13 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:rolling_glory_ecommerce/constants.dart';
 
 class MyDetailPageApp extends StatelessWidget {
-  const MyDetailPageApp({super.key});
+  const MyDetailPageApp({super.key, this.detailData});
+
+  final dynamic detailData;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +34,12 @@ class _MyDetailPageState extends State<MyDetailPage> {
   Widget build(BuildContext context) {
     // ignore: prefer_const_constructors
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Gift detail',
+          style: TextStyle(color: darkBlueColor),
+        ),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

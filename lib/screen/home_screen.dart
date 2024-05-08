@@ -10,8 +10,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:rolling_glory_ecommerce/component/card.dart';
 import 'package:rolling_glory_ecommerce/component/spinner.dart';
 import 'package:rolling_glory_ecommerce/constants.dart';
+import 'package:rolling_glory_ecommerce/screen/detail_screen.dart';
 import 'package:rolling_glory_ecommerce/service/gifts/gifts.dart';
 
 class MyHomePageApp extends StatelessWidget {
@@ -174,136 +176,27 @@ class _MyHomePageState extends State<MyHomePage> {
                             crossAxisSpacing: 21),
                         itemCount: itemPerPageState,
                         itemBuilder: (BuildContext context, int index) {
-                          return Stack(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                    border:
-                                        Border.all(color: greyColor, width: 1),
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(4),
-                                    )),
-                                child: Column(
-                                  children: [
-                                    if (resGifts?["data"]?[index]?["attributes"]
-                                                ?["images"] !=
-                                            null &&
-                                        resGifts?["data"]?[index]?["attributes"]
-                                                ?["images"][0] !=
-                                            "https://rgbtest.s3.ap-southeast-1.amazonaws.com/images/gift/full/xiaomi-mi-10-pro-5g.jpg")
-                                      Image.network(
-                                        resGifts?["data"]?[index]?["attributes"]
-                                            ?["images"]?[0],
-                                        fit: BoxFit.contain,
-                                        width: 100,
-                                        height: 135,
-                                      ),
-                                    const SizedBox(
-                                      height: 12,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Flexible(
-                                            child: Text(
-                                          resGifts?["data"]?[index]
-                                                  ?["attributes"]?["name"] ??
-                                              "",
-                                          style: const TextStyle(
-                                              color: darkBlueColor,
-                                              fontSize: 12),
-                                        ))
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 4,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Image.asset(
-                                          "lib/assets/images/ic_point.png",
-                                          height: 12,
-                                          width: 12,
-                                        ),
-                                        const SizedBox(
-                                          width: 8,
-                                        ),
-                                        Text(
-                                          "${resGifts?["data"]?[index]?["attributes"]?["points"] ?? ""} poins",
-                                          style: const TextStyle(
-                                              color: greenColor, fontSize: 12),
-                                        )
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 12,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                                children: List.generate(
-                                              int.parse(resGifts?["data"]
-                                                          ?[index]
-                                                      ?["attributes"]?["rating"]
-                                                  .toStringAsFixed(0)),
-                                              (index) => Image.asset(
-                                                  "lib/assets/images/ic_star.png",
-                                                  height: 12,
-                                                  width: 12),
-                                            )),
-                                            const SizedBox(
-                                              height: 4,
-                                            ),
-                                            Text(
-                                              "${resGifts?["data"]?[index]?["attributes"]?["numOfReviews"] ?? ""} reviews",
-                                              style: const TextStyle(
-                                                  fontSize: 10,
-                                                  color: greyColor),
-                                            )
-                                          ],
-                                        ),
-                                        GestureDetector(
-                                            onTap: () {
-                                              if (!isLoadingWhistList) {
-                                                handleWhistList(
-                                                    idGift: resGifts?["data"]
-                                                        ?[index]?["id"],
-                                                    context: mainContext,
-                                                    isWishlist:
-                                                        resGifts?["data"]
-                                                                    ?[index]
-                                                                ?["attributes"]
-                                                            ?["isWishlist"]);
-                                              }
-                                            },
-                                            child: resGifts?["data"]?[index]
-                                                            ?["attributes"]
-                                                        ?["isWishlist"] ==
-                                                    1
-                                                ? const Icon(Icons.favorite,
-                                                    color: redColor)
-                                                : const Icon(
-                                                    Icons.favorite_border,
-                                                    color: greySolidColor))
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                              if (resGifts?["data"]?[index]?["attributes"]
-                                      ?["isNew"] ==
-                                  1)
-                                Container(
-                                    alignment: Alignment.topRight,
-                                    child: Image.asset(
-                                        "lib/assets/images/ic_new.png"))
-                            ],
+                          return MyCardApp(
+                            index: index,
+                            resGifts: resGifts,
+                            onTap: () {
+                              Navigator.push(
+                                  mainContext,
+                                  MaterialPageRoute(
+                                      builder: (context) => MyDetailPageApp(
+                                            detailData: resGifts?["data"]
+                                                ?[index],
+                                          )));
+                            },
+                            onTapWhisList: () {
+                              if (!isLoadingWhistList) {
+                                handleWhistList(
+                                    idGift: resGifts?["data"]?[index]?["id"],
+                                    context: mainContext,
+                                    isWishlist: resGifts?["data"]?[index]
+                                        ?["attributes"]?["isWishlist"]);
+                              }
+                            },
                           );
                         })),
                 if (noDataAnymore)
