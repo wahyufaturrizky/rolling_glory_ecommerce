@@ -14,14 +14,7 @@ class MyDetailPageApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Detail Screen',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyDetailPage(),
-    );
+    return const MyDetailPage();
   }
 }
 
@@ -37,13 +30,18 @@ class _MyDetailPageState extends State<MyDetailPage> {
   Widget build(BuildContext context) {
     // ignore: prefer_const_constructors
     return Scaffold(
-      body: const Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'Detail',
-            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                'Detail',
+              ),
+            )
           ],
         ),
       ),

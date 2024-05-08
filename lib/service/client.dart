@@ -7,6 +7,8 @@
  * See LICENSE for distribution and usage details.
  */
 
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:rolling_glory_ecommerce/constants.dart';
 
@@ -43,7 +45,9 @@ Future<dynamic> clientDio(
         data: data);
     print('@client response $response');
 
-    return response;
+    var decodeJsonRes = jsonDecode(response.toString());
+
+    return decodeJsonRes;
   } on DioException catch (e) {
     print('@client error $e');
     if (e.response != null) {
