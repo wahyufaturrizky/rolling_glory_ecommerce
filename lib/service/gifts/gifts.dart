@@ -7,7 +7,7 @@
  * See LICENSE for distribution and usage details.
  */
 
-import 'package:rolling_glory_ecommerce/services/client.dart';
+import 'package:rolling_glory_ecommerce/service/client.dart';
 
 Future<dynamic> handleGetDataGifts(queryParameters) {
   return clientDio(
