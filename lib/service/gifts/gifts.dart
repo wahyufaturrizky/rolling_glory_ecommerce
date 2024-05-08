@@ -23,10 +23,9 @@ Future<dynamic> handleGetDataGiftsDetail(idGift) {
   );
 }
 
-Future<dynamic> handleWhislistGifts(data, idGift) {
+Future<dynamic> handleWhislistGifts(idGift) {
   return clientDio(
     serviceUrlParam: '/gifts/$idGift/wishlist',
     methodParam: "POST",
-    data: data,
   );
 }

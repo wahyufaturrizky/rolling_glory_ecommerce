@@ -9,7 +9,9 @@
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:rolling_glory_ecommerce/component/spinner.dart';
+import 'package:rolling_glory_ecommerce/constants.dart';
 import 'package:rolling_glory_ecommerce/service/gifts/gifts.dart';
 
 class MyHomePageApp extends StatelessWidget {
@@ -38,6 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
   late ScrollController? gridViewContoller = ScrollController();
 
   bool isLoadingResGifts = false;
+  bool isLoadingWhistList = false;
   var resGifts;
 
   @override
@@ -87,7 +90,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 ...res?["data"],
               ]
             };
-            print(response);
 
             int tempItemPerPageState = res?["data"]?.length;
 
@@ -117,6 +119,37 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  Future<dynamic> handleWhistList({idGift, context, isWishlist}) async {
+    try {
+      setState(() {
+        isLoadingWhistList = true;
+      });
+
+      var res = await handleWhislistGifts(idGift);
+
+      if (res != null) {
+        var snackBar = SnackBar(
+            behavior: SnackBarBehavior.floating,
+            duration: Duration(milliseconds: 2000),
+            content: Text(
+              isWishlist == 0
+                  ? "⛹️ Success add favorite"
+                  : "❌ Success remove favorite",
+            ));
+
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+        setState(() {
+          isLoadingWhistList = false;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoadingWhistList = false;
+      });
+    }
+  }
+
   @override
   void dispose() {
     gridViewContoller?.dispose();
@@ -124,7 +157,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext mainContext) {
     return Scaffold(
         body: Container(
             padding: const EdgeInsets.all(16),
@@ -133,42 +166,123 @@ class _MyHomePageState extends State<MyHomePage> {
                 Expanded(
                     child: GridView.builder(
                         controller: gridViewContoller,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                mainAxisSpacing: 21,
-                                crossAxisSpacing: 21),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 21,
+                            mainAxisExtent:
+                                MediaQuery.of(mainContext).size.height * 0.43,
+                            crossAxisSpacing: 21),
                         itemCount: itemPerPageState,
                         itemBuilder: (BuildContext context, int index) {
                           return Container(
-                            padding: const EdgeInsets.all(14),
+                            padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                                border: Border.all(
-                                    color:
-                                        const Color.fromRGBO(216, 216, 216, 1),
-                                    width: 1),
+                                border: Border.all(color: greyColor, width: 1),
                                 borderRadius: const BorderRadius.all(
                                   Radius.circular(4),
                                 )),
                             child: Column(
                               children: [
                                 if (resGifts?["data"]?[index]?["attributes"]
-                                        ?["images"] !=
-                                    null)
+                                            ?["images"] !=
+                                        null &&
+                                    resGifts?["data"]?[index]?["attributes"]
+                                            ?["images"][0] !=
+                                        "https://rgbtest.s3.ap-southeast-1.amazonaws.com/images/gift/full/xiaomi-mi-10-pro-5g.jpg")
                                   Image.network(
                                     resGifts?["data"]?[index]?["attributes"]
                                         ?["images"]?[0],
-                                    height: 80,
-                                    fit: BoxFit.cover,
+                                    fit: BoxFit.contain,
+                                    width: 100,
+                                    height: 135,
                                   ),
-                                Text(
-                                  resGifts?["data"]?[index]?["attributes"]
-                                          ?["name"] ??
-                                      "",
-                                  textAlign: TextAlign.left,
-                                  style: const TextStyle(
-                                      color: Color.fromRGBO(37, 49, 91, 1),
-                                      fontSize: 12),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                Row(
+                                  children: [
+                                    Flexible(
+                                        child: Text(
+                                      resGifts?["data"]?[index]?["attributes"]
+                                              ?["name"] ??
+                                          "",
+                                      style: const TextStyle(
+                                          color: darkBlueColor, fontSize: 12),
+                                    ))
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 4,
+                                ),
+                                Row(
+                                  children: [
+                                    Image.asset(
+                                      "lib/assets/images/ic_point.png",
+                                      height: 12,
+                                      width: 12,
+                                    ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                      "${resGifts?["data"]?[index]?["attributes"]?["points"] ?? ""} poins",
+                                      style: const TextStyle(
+                                          color: greenColor, fontSize: 12),
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                            children: List.generate(
+                                          int.parse(resGifts?["data"]?[index]
+                                                  ?["attributes"]?["rating"]
+                                              .toStringAsFixed(0)),
+                                          (index) => Image.asset(
+                                              "lib/assets/images/ic_star.png",
+                                              height: 12,
+                                              width: 12),
+                                        )),
+                                        const SizedBox(
+                                          height: 4,
+                                        ),
+                                        Text(
+                                          "${resGifts?["data"]?[index]?["attributes"]?["numOfReviews"] ?? ""} reviews",
+                                          style: const TextStyle(
+                                              fontSize: 10, color: greyColor),
+                                        )
+                                      ],
+                                    ),
+                                    GestureDetector(
+                                        onTap: () {
+                                          if (!isLoadingWhistList) {
+                                            handleWhistList(
+                                                idGift: resGifts?["data"]
+                                                    ?[index]?["id"],
+                                                context: mainContext,
+                                                isWishlist: resGifts?["data"]
+                                                        ?[index]?["attributes"]
+                                                    ?["isWishlist"]);
+                                          }
+                                        },
+                                        child: resGifts?["data"]?[index]
+                                                        ?["attributes"]
+                                                    ?["isWishlist"] ==
+                                                1
+                                            ? const Icon(Icons.favorite,
+                                                color: redColor)
+                                            : const Icon(Icons.favorite_border,
+                                                color: greySolidColor))
+                                  ],
                                 )
                               ],
                             ),
@@ -179,7 +293,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Text("👋🏻 Hi your reach the end of the list",
                         style: TextStyle(fontSize: 14)),
                   ),
-                if (isLoadingResGifts) MySpinnerApp()
+                if (isLoadingResGifts) const MySpinnerApp()
               ],
             )));
   }
