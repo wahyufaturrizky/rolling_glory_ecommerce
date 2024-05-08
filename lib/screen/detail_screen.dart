@@ -8,7 +8,6 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:rolling_glory_ecommerce/constants.dart';
 
 class MyDetailPageApp extends StatelessWidget {
@@ -93,81 +92,103 @@ class _MyDetailPageState extends State<MyDetailPage> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        children: [
-                          Row(
-                              children: List.generate(
-                            int.parse(widget.detailData?["attributes"]
-                                    ?["rating"]
-                                .toStringAsFixed(0)),
-                            (index) => Image.asset(
-                                "lib/assets/images/ic_star.png",
-                                height: 12,
-                                width: 12),
-                          )),
-                          const SizedBox(
-                            height: 4,
-                          ),
-                          Text(
-                            "${widget.detailData?["attributes"]?["numOfReviews"] ?? ""}",
-                            style: const TextStyle(
-                                fontSize: 12, color: greySoftColor),
-                          ),
-                          const SizedBox(
-                            height: 4,
-                          ),
-                          const Text(
-                            "reviews",
-                            style:
-                                TextStyle(fontSize: 12, color: greySoftColor),
-                          ),
-                        ],
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    decoration: const BoxDecoration(
+                      border: Border.symmetric(
+                        horizontal: BorderSide(
+                          color: greyColor,
+                          width: 1,
+                        ),
                       ),
-                      Column(
-                        children: [
-                          Image.asset(
-                            "lib/assets/images/ic_point_detail.png",
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          children: [
+                            Row(
+                                children: List.generate(
+                              int.parse(widget.detailData?["attributes"]
+                                      ?["rating"]
+                                  .toStringAsFixed(0)),
+                              (index) => Image.asset(
+                                  "lib/assets/images/ic_star.png",
+                                  height: 12,
+                                  width: 12),
+                            )),
+                            const SizedBox(
+                              height: 4,
+                            ),
+                            Text(
+                              "${widget.detailData?["attributes"]?["numOfReviews"] ?? ""}",
+                              style: const TextStyle(
+                                  fontSize: 12, color: greySoftColor),
+                            ),
+                            const SizedBox(
+                              height: 4,
+                            ),
+                            const Text(
+                              "reviews",
+                              style:
+                                  TextStyle(fontSize: 12, color: greySoftColor),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          decoration: const BoxDecoration(
+                            border: Border.symmetric(
+                              vertical: BorderSide(
+                                color: greyColor,
+                                width: 1,
+                              ),
+                            ),
                           ),
-                          const SizedBox(
-                            height: 4,
+                          child: Column(
+                            children: [
+                              Image.asset(
+                                "lib/assets/images/ic_point_detail.png",
+                              ),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                "${widget.detailData?["attributes"]?["points"] ?? ""}",
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    color: greenColor,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              const Text(
+                                "Points",
+                                style: TextStyle(
+                                    fontSize: 12, color: greySoftColor),
+                              ),
+                            ],
                           ),
-                          Text(
-                            "${widget.detailData?["attributes"]?["points"] ?? ""}",
-                            style: const TextStyle(
-                                fontSize: 16,
-                                color: greenColor,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(
-                            height: 4,
-                          ),
-                          const Text(
-                            "Points",
-                            style:
-                                TextStyle(fontSize: 12, color: greySoftColor),
-                          ),
-                        ],
-                      ),
-                      const Column(
-                        children: [
-                          Icon(
-                            Icons.favorite_border,
-                            color: greySolidColor,
-                          ),
-                          SizedBox(
-                            height: 4,
-                          ),
-                          Text(
-                            "Add to wishlist",
-                            style:
-                                TextStyle(fontSize: 12, color: greySoftColor),
-                          ),
-                        ],
-                      )
-                    ],
+                        ),
+                        const Column(
+                          children: [
+                            Icon(
+                              Icons.favorite_border,
+                              color: greySolidColor,
+                            ),
+                            SizedBox(
+                              height: 4,
+                            ),
+                            Text(
+                              "Add to wishlist",
+                              style:
+                                  TextStyle(fontSize: 12, color: greySoftColor),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                   const SizedBox(
                     height: 16,
