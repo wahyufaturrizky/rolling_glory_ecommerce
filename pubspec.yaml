@@ -62,6 +62,7 @@ flutter:
     - lib/assets/images/ic_point.png
     - lib/assets/images/ic_star.png
     - lib/assets/images/ic_new.png
+    - lib/assets/images/ic_point_detail.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

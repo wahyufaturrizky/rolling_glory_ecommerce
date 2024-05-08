@@ -8,6 +8,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:rolling_glory_ecommerce/constants.dart';
 
 class MyDetailPageApp extends StatelessWidget {
@@ -42,7 +43,8 @@ class _MyDetailPageState extends State<MyDetailPage> {
             style: TextStyle(color: darkBlueColor),
           ),
         ),
-        body: Stack(
+        body: SingleChildScrollView(
+            child: Stack(
           children: [
             Container(
               padding: const EdgeInsets.all(12),
@@ -83,10 +85,170 @@ class _MyDetailPageState extends State<MyDetailPage> {
                       Flexible(
                           child: Text(
                         widget.detailData?["attributes"]?["info"],
-                        style: const TextStyle(fontSize: 12, color: greyColor),
+                        style:
+                            const TextStyle(fontSize: 12, color: greySoftColor),
                       ))
                     ],
                   ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        children: [
+                          Row(
+                              children: List.generate(
+                            int.parse(widget.detailData?["attributes"]
+                                    ?["rating"]
+                                .toStringAsFixed(0)),
+                            (index) => Image.asset(
+                                "lib/assets/images/ic_star.png",
+                                height: 12,
+                                width: 12),
+                          )),
+                          const SizedBox(
+                            height: 4,
+                          ),
+                          Text(
+                            "${widget.detailData?["attributes"]?["numOfReviews"] ?? ""}",
+                            style: const TextStyle(
+                                fontSize: 12, color: greySoftColor),
+                          ),
+                          const SizedBox(
+                            height: 4,
+                          ),
+                          const Text(
+                            "reviews",
+                            style:
+                                TextStyle(fontSize: 12, color: greySoftColor),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Image.asset(
+                            "lib/assets/images/ic_point_detail.png",
+                          ),
+                          const SizedBox(
+                            height: 4,
+                          ),
+                          Text(
+                            "${widget.detailData?["attributes"]?["points"] ?? ""}",
+                            style: const TextStyle(
+                                fontSize: 16,
+                                color: greenColor,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 4,
+                          ),
+                          const Text(
+                            "Points",
+                            style:
+                                TextStyle(fontSize: 12, color: greySoftColor),
+                          ),
+                        ],
+                      ),
+                      const Column(
+                        children: [
+                          Icon(
+                            Icons.favorite_border,
+                            color: greySolidColor,
+                          ),
+                          SizedBox(
+                            height: 4,
+                          ),
+                          Text(
+                            "Add to wishlist",
+                            style:
+                                TextStyle(fontSize: 12, color: greySoftColor),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  const Row(
+                    children: [
+                      Text(
+                        "Info Produk",
+                        style: TextStyle(color: darkBlueColor, fontSize: 14),
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    children: [
+                      Flexible(
+                          child: Text(
+                        widget.detailData?["attributes"]?["description"],
+                        style:
+                            const TextStyle(color: darkBlueColor, fontSize: 14),
+                      ))
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: greyColor,
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("-"),
+                            Text(
+                              "1",
+                            ),
+                            Text("+")
+                          ],
+                        ),
+                      ),
+                      Container(
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: greenColor, width: 1),
+                            borderRadius: BorderRadius.circular(40),
+                          ),
+                          child: const Text("Add to cart",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: greenColor))),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  GestureDetector(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: greenColor,
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                      child: const Text("Redeem",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          )),
+                    ),
+                  )
                 ],
               ),
             ),
@@ -95,6 +257,6 @@ class _MyDetailPageState extends State<MyDetailPage> {
                   alignment: Alignment.topRight,
                   child: Image.asset("lib/assets/images/ic_new.png"))
           ],
-        ));
+        )));
   }
 }

@@ -7,14 +7,10 @@
  * See LICENSE for distribution and usage details.
  */
 
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:rolling_glory_ecommerce/component/card.dart';
 import 'package:rolling_glory_ecommerce/component/spinner.dart';
-import 'package:rolling_glory_ecommerce/constants.dart';
 import 'package:rolling_glory_ecommerce/screen/detail_screen.dart';
 import 'package:rolling_glory_ecommerce/service/gifts/gifts.dart';
 
@@ -209,41 +205,4 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             )));
   }
-}
-
-class Gift {
-  final String id;
-  final String type;
-  final Attributes attributes;
-
-  const Gift(this.id, this.type, this.attributes);
-}
-
-class Attributes {
-  final int id;
-  final String name;
-  final String info;
-  final String description;
-  final int points;
-  final String slug;
-  final int stock;
-  final List<String> images;
-  final int isNew;
-  final double rating;
-  final int numOfReviews;
-  final int isWishlist;
-
-  const Attributes(
-      this.id,
-      this.name,
-      this.info,
-      this.description,
-      this.points,
-      this.slug,
-      this.stock,
-      this.images,
-      this.isNew,
-      this.rating,
-      this.numOfReviews,
-      this.isWishlist);
 }
