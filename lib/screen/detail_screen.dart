@@ -8,6 +8,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:rolling_glory_ecommerce/constants.dart';
 
 class MyDetailPageApp extends StatelessWidget {
@@ -79,15 +80,11 @@ class _MyDetailPageState extends State<MyDetailPage> {
                   const SizedBox(
                     height: 4,
                   ),
-                  Row(
-                    children: [
-                      Flexible(
-                          child: Text(
-                        widget.detailData?["attributes"]?["info"],
-                        style:
-                            const TextStyle(fontSize: 12, color: greySoftColor),
-                      ))
-                    ],
+                  HtmlWidget(
+                    '''${widget.detailData?["attributes"]?["info"]}''',
+                    renderMode: RenderMode.column,
+                    textStyle:
+                        const TextStyle(fontSize: 12, color: greySoftColor),
                   ),
                   const SizedBox(
                     height: 16,
@@ -204,15 +201,11 @@ class _MyDetailPageState extends State<MyDetailPage> {
                   const SizedBox(
                     height: 8,
                   ),
-                  Row(
-                    children: [
-                      Flexible(
-                          child: Text(
-                        widget.detailData?["attributes"]?["description"],
-                        style:
-                            const TextStyle(color: darkBlueColor, fontSize: 14),
-                      ))
-                    ],
+                  HtmlWidget(
+                    '''${widget.detailData?["attributes"]?["description"]}''',
+                    renderMode: RenderMode.column,
+                    textStyle:
+                        const TextStyle(fontSize: 14, color: darkBlueColor),
                   ),
                   const SizedBox(
                     height: 16,
